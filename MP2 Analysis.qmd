@@ -68,6 +68,17 @@ colnames(data_clean) <- names
 write_csv(data_clean, file = "clean_data.csv")
 ```
 
+```{r}
+ggplot(data_clean, aes(x = condition, y = score, 
+                    group = car, 
+                    color = car)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = 0)
+```
+
+
+
+
 ## Conditions Check
 ```{r, echo=FALSE}
 # fit the model
