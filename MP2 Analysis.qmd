@@ -52,7 +52,13 @@ data_clean <- data_raw |>
   filter(Finished != "FALSE")|>
   filter(Consent != "No") |> 
   select(-(1:(ncol(data_raw) - 4)))|>
-  pivot_longer(everything(), names_to = "condition", values_to = "score") |>
+  pivot_longer(cols = c(QuestionMorning, QuestionAfternoon, QuestionEvening), 
+               names_to = "condition", values_to = "score") |>
+  filter(!is.na(score))
+
+data_clean$score <- as.numeric(data_clean$score)
+
+data_clean <- data_clean |>
   filter(!is.na(score))
 
 # write the cleaned data into csv for submission
