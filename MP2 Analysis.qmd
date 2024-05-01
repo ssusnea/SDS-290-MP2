@@ -89,10 +89,10 @@ mod <- lm(score ~ condition*car, data = data_clean)
 ```
 
 - C. Constant effects: 
-Assumed every observation in a similar condition is affected exactly the same. This means that each participant is is affected exactly in the same condition group.
+Assumed each participant is affected exactly the same in each condition group.
 
 - A. Additive effects:
-Assumed the effect of each condition is added to individual observation, rather than affecting each other.
+Assumed effects of condition, car and interaction of condition and car are addictive.
 
 - S. Same standard deviations:
 ```{r, echo=FALSE}
@@ -116,7 +116,7 @@ data_clean |>
 plot(mod, which = 1)
 ```
 
-The condition is met because the largest standard deviation is not yet 2 times of the smallest standard deviation (1.21/1.13 = 1.070796).
+The largest SD is slightly more than two times (2.12) as big as the smallest for the interaction condition, but is satisfied for condition and score conditions separately, and the graph also does not show a pattern of residuals, so it is reasonable.
 
 - I. Independent residuals:
 Assumed the residuals are independent due to independent participants. 
@@ -125,7 +125,8 @@ Assumed the residuals are independent due to independent participants.
 ```{r, echo=FALSE, fig.height=3, fig.width=5}
 plot(mod, which = 2)
 ```
-Residual distribution is roughly normal, except for those deviate at both ends. However, since real-world data wouldn't be perfect and there are only 39 complete responses in this study, the condition is assumed satisfied. 
+Residual distribution is roughly normal, except for those deviate at both ends. However, since real-world data wouldn't be perfect and there are only 38 complete responses in this study, the condition is assumed satisfied. 
+
 
 - Z. Zero mean residuals:
 ```{r, echo=FALSE, fig.height=3, fig.width=5}
@@ -256,14 +257,3 @@ Given the sum of squares due to regression (SSR) and the sum of squares total (S
 This research aims to investigate the correlation between the timing of class offerings and college students' inclination to enroll in the class. The hypothesis is that students will display preferences or aversions towards specific class schedule times, particularly favoring morning or afternoon classes over evening ones. The ANOVA test results reveal a statistically significant impact of class timing on students' inclination to register, which favors the hypothesis. Furthermore, the evaluation of Fisher's LSD scores and confidence intervals indicate significant mean differences between two out of three comparison groups (ConditionMorning and ConditionAfternoon; ConditionAfternoon and ConditionEvening). This suggests a preference among college students for courses offered in the afternoon over those offered in the morning or evening, with both groups exhibiting large effect sizes. The R-squared value of 0.2438248 signifies that approximately 24% of the variation in students' willingness to enroll in the course can be attributed to the timing of class offerings, indicating a moderate explanatory power.
 
 Despite the significant findings, several limitations of the study should be acknowledged. Firstly, the sample size employed in the research is relatively small and limited to the SDS 290 class, which may affect the generalizability of the results to a broader population of college students. Secondly, while the timing of class offerings explains 24% of the variation in students' enrollment preferences, it is important to recognize that other factors or confounding variables may play a role in influencing these preferences to a greater extent. Therefore, future research should aim to address these limitations by employing larger sample sizes, adopting a balanced experimental design, and exploring additional variables that could contribute to a more comprehensive understanding of college students' class enrollment behaviors.
-
-
-
-
-
-
-
-
-
-
-
