@@ -131,7 +131,7 @@ Residual distribution is roughly normal, except for those deviate at both ends. 
 ```{r, echo=FALSE, fig.height=3, fig.width=5}
 qplot(mod$residuals, bins = 5)
 ```
-According to the histogram, the distribution of the residuals is slightly right skewed, making the mean of the residuals unequal to zero. This condition is violated. However, if more responses where collected, there could be a chance that the residual mean is zero.
+According to the histogram, the distribution is normal with the mean of the residuals centered at zero. This condition is satisfied.
 
 ## ANOVA table and boxplot
 After checking all the conditions, the model has been fitted and an ANOVA test has been used. The ANOVA table is provided below:
