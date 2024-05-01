@@ -252,8 +252,6 @@ R2 = 14.323/(14.323+44.420)
 ```
 Given the sum of squares due to regression (SSR) and the sum of squares total (SST) scores from the ANOVA table, the R-squared value is computed to be 0.2438248. This means that about 24% of the variation in college students' willingness of taking the course is explained by when the class is offered.
 
-
-
 # Conclusion
 This research aims to investigate the correlation between the timing of class offerings and college students' inclination to enroll in the class. The hypothesis is that students will display preferences or aversions towards specific class schedule times, particularly favoring morning or afternoon classes over evening ones. The ANOVA test results reveal a statistically significant impact of class timing on students' inclination to register, which favors the hypothesis. Furthermore, the evaluation of Fisher's LSD scores and confidence intervals indicate significant mean differences between two out of three comparison groups (ConditionMorning and ConditionAfternoon; ConditionAfternoon and ConditionEvening). This suggests a preference among college students for courses offered in the afternoon over those offered in the morning or evening, with both groups exhibiting large effect sizes. The R-squared value of 0.2438248 signifies that approximately 24% of the variation in students' willingness to enroll in the course can be attributed to the timing of class offerings, indicating a moderate explanatory power.
 
