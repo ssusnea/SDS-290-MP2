@@ -89,10 +89,10 @@ mod <- lm(score ~ condition*car, data = data_clean)
 ```
 
 - C. Constant effects: 
-Assumed every observation in a similar condition is affected exactly the same. This means that each participant is is affected exactly in the same condition group.
+Assumed each participant is affected exactly the same in each condition group.
 
 - A. Additive effects:
-Assumed the effect of each condition is added to individual observation, rather than affecting each other.
+Assumed effects of condition, car and interaction of condition and car are addictive.
 
 - S. Same standard deviations:
 ```{r, echo=FALSE}
