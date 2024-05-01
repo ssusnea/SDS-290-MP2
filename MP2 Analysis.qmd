@@ -25,7 +25,7 @@ data_raw <- read.csv("data_raw.csv")
 
 # Introduction
 
-What motivates college students to enroll in a particular class? This study seeks to investigate the correlation between the timing of class offerings and college students' inclination to register for the class. The hypothesis is that college students exhibit preferences or aversions towards certain class schedule times. Specifically, it is expected that students generally favor morning or afternoon classes over evening ones.
+What drives college students to choose specific classes? This research aims to explore how the timing of class schedules and car ownership influence college students' likelihood of enrolling in a particular course. We hypothesized that there is a main effect of the timing of classes on students' registration preferences, with a preference for afternoon sessions over morning and evening ones. Additionally, we hypothesized that car ownership plays a role, with students who own cars being more inclined to register for the class.
 
 # Method 
 
