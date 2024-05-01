@@ -25,7 +25,7 @@ data_raw <- read.csv("data_raw.csv")
 
 # Introduction
 
-What motivates college students to enroll in a particular class? This study seeks to investigate the correlation between the timing of class offerings and college students' inclination to register for the class. The hypothesis is that college students exhibit preferences or aversions towards certain class schedule times. Specifically, it is expected that students generally favor morning or afternoon classes over evening ones.
+What drives college students to choose specific classes? This research aims to explore how the timing of class schedules and car ownership influence college students' likelihood of enrolling in a particular course. We hypothesized that there is a main effect of the timing of classes on students' registration preferences, with a preference for afternoon sessions over morning and evening ones. Additionally, we hypothesized that car ownership plays a role, with students who own cars being more inclined to register for the class.
 
 # Method 
 
@@ -257,14 +257,3 @@ Given the sum of squares due to regression (SSR) and the sum of squares total (S
 This research aims to investigate the correlation between the timing of class offerings and college students' inclination to enroll in the class. The hypothesis is that students will display preferences or aversions towards specific class schedule times, particularly favoring morning or afternoon classes over evening ones. The ANOVA test results reveal a statistically significant impact of class timing on students' inclination to register, which favors the hypothesis. Furthermore, the evaluation of Fisher's LSD scores and confidence intervals indicate significant mean differences between two out of three comparison groups (ConditionMorning and ConditionAfternoon; ConditionAfternoon and ConditionEvening). This suggests a preference among college students for courses offered in the afternoon over those offered in the morning or evening, with both groups exhibiting large effect sizes. The R-squared value of 0.2438248 signifies that approximately 24% of the variation in students' willingness to enroll in the course can be attributed to the timing of class offerings, indicating a moderate explanatory power.
 
 Despite the significant findings, several limitations of the study should be acknowledged. Firstly, the sample size employed in the research is relatively small and limited to the SDS 290 class, which may affect the generalizability of the results to a broader population of college students. Secondly, while the timing of class offerings explains 24% of the variation in students' enrollment preferences, it is important to recognize that other factors or confounding variables may play a role in influencing these preferences to a greater extent. Therefore, future research should aim to address these limitations by employing larger sample sizes, adopting a balanced experimental design, and exploring additional variables that could contribute to a more comprehensive understanding of college students' class enrollment behaviors.
-
-
-
-
-
-
-
-
-
-
-
