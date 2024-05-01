@@ -25,11 +25,11 @@ data_raw <- read.csv("data_raw.csv")
 
 # Introduction
 
-What drives college students to choose specific classes? This research aims to explore how the timing of class schedules and car ownership influence college students' likelihood of enrolling in a particular course. We hypothesized that there is a main effect of the timing of classes on students' registration preferences, with a preference for afternoon sessions over morning and evening ones. Additionally, we hypothesized that car ownership plays a role, with students who own cars being more inclined to register for the class.
+What drives college students to choose specific classes? This research aims to explore how the timing of class schedules and car ownership influence college students' likelihood of enrolling in a particular course. We hypothesized that there is a main effect of the timing of classes on students' registration preferences, with a preference for afternoon sessions over morning and evening ones. Additionally, we hypothesized that car ownership plays a role, with students who own cars being more inclined to register for the class. We also hypothesized that there will be a significant interaction effect of class schedules and car ownership on preferences of class registration.
 
 # Method 
 
-The study collected data specifically for the SDS290 class during the Spring of 2024, with a total of 37 college students participating. Two incomplete responses were removed during the data cleaning process, resulting in a dataset of 35 observations. The experiemntal unit of this study is participants. Each participant was presented with a scenario regarding course registration and then asked to rate their interest in enrolling in the class on a scale of 1 to 5, which is the response variable of this study. The scenario provided was as follows:
+The study collected data specifically for the SDS290 class during the Spring of 2024, with a total of 38 college students participating. One incomplete response was removed during the data cleaning process, resulting in a dataset of 38 observations. The experiemntal unit of this study is participants. Each participant was presented with a scenario regarding course registration and then asked to rate their interest in enrolling in the class on a scale of 1 to 5, which is the response variable of this study. The scenario provided was as follows:
 
 
 *You've come across a fascinating course that you'd like to take next semester, but unfortunately, Smith does not offer this particular class. Luckily, you discovered that Amherst College provides this course, scheduled every Monday and Wednesday from* ___ *to* ___*. On a scale of 1 to 5, how inclined are you to enroll in this course? (1 = not interested at all, 5 = Yes! I will definitely take it)*
@@ -42,6 +42,8 @@ The blanks in the scenario represent class schedules, which is the factor of int
 - scheduled every Monday and Wednesday from 2:10 pm to 3:30 pm (ConditionAfternoon).
 
 - scheduled every Monday and Wednesday from 4:50 pm to 6:10 pm (ConditionEvening).
+
+In addition to the scenario question, all participants were asked if they own a car on campus. They could either answer "Yes" or "No."
 
 # Results
 ```{r, echo=FALSE}
@@ -68,17 +70,7 @@ colnames(data_clean) <- names
 write_csv(data_clean, file = "clean_data.csv")
 ```
 
-```{r}
-ggplot(data_clean, aes(x = condition, y = score, 
-                    group = car, 
-                    color = car)) +
-  geom_point() +
-  geom_smooth(method = "lm", se = 0)
-```
 
-```{r}
-
-```
 
 
 
@@ -133,7 +125,7 @@ qplot(mod$residuals, bins = 5)
 ```
 According to the histogram, the distribution is normal with the mean of the residuals centered at zero. This condition is satisfied.
 
-## ANOVA table and boxplot
+## ANOVA table and plots
 After checking all the conditions, the model has been fitted and an ANOVA test has been used. The ANOVA table is provided below:
 ```{r, echo=FALSE}
 anova(mod)
@@ -150,101 +142,13 @@ According to both the ANOVA result and the boxplot, there is no statistically si
 
 The hypothesis of college students exhibit preferences or aversions towards certain class schedule times is favored. Significantly, the boxplot demonstrates a greater average willingness score for class offerings in the afternoon compared to both evening and morning sessions.
 
-## Fisher's LSD 
-```{r, echo=FALSE}
-MSE = 1.3881
-df_E = 32
-t <- qt(.975, df_E)
-
-# LSD for ConditionMorning and ConditionAfternoon
-LSD1 = t*sqrt(MSE)*sqrt(1/11+1/13)
-
-# LSD for ConditionAfternoon and ConditionEvening
-LSD2 = t*sqrt(MSE)*sqrt(1/13+1/11)
-
-# LSD for ConditionMorning and ConditionEvening
-LSD3 = t*sqrt(MSE)*sqrt(1/11+1/11)
-
-# Mean difference between ConditionMorning and ConditionAfternoon
-mean1 <- 3.45-2
-# Mean difference between ConditionAfternoon and ConditionEvening
-mean2 <- 3.45-2.15
-# Mean difference between ConditionMorning and ConditionEvening
-mean3 <- 2.15-2
+```{r,echo = F}
+ggplot(data_clean, aes(x = condition, y = score, 
+                    group = car, 
+                    color = car)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = 0)
 ```
-
-Given the mean squared error (1.3881), the degree of freedom of error (32), and the number of observations in each condition groups, LSD scores can be computed to examine the differences between condition groups. Since this is an unbalanced design with ConditionMorning having 11 observations, ConditionAfternoon having 11 observations, and ConditionEvening having 13 observations, 3 LSD scores and 3 differences in means are computed and compared:
-
-```{r, echo=FALSE}
-# create a data frame to store LSD and mean differences
-df <- data.frame(
-  Comparison = c("ConditionMorning and ConditionAfternoon", 
-                 "ConditionAfternoon and ConditionEvening", 
-                 "ConditionMorning and ConditionEvening"),
-  LSD = c(LSD1, LSD2, LSD3),
-  MeanDifference = c(mean1, mean2, mean3),
-  Significant = c("Yes", "Yes", "No")
-)
-
-# Create a table using kable
-table <- kable(df)
-table
-```
-
-According to the table reporting the comparison between the LSD and the mean difference score for each comparison, two comparisons were found to have significant different means (MeanDifference is higher than LSD score). Only ConditionMorning and ConditionEvening have insignificant difference in mean (MeanDifference is lower than LSD score). 
-
-
-## Confidence Interval
-Confidence intervals are computed for all three comparison groups in the table below:
-```{r, echo=FALSE}
-# calculate lower and upper bounds for each comparison
-LL1 <- mean1 - LSD1 #lower limit
-UL1 <- mean1 + LSD1 #upper limit
-
-LL2 <- mean2 - LSD2 #lower limit
-UL2 <- mean2 + LSD2 #upper limit
-
-LL3 <- mean3 - LSD3 #lower limit
-UL3 <- mean3 + LSD3 #upper limit
-
-# create a data frame to store confidence intervals
-df2 <- data.frame(
-  Comparison = c("ConditionMorning and ConditionAfternoon", 
-                 "ConditionAfternoon and ConditionEvening", 
-                 "ConditionMorning and ConditionEvening"),
-  LowerLimit = c(LL1, LL2, LL3),
-  UpperLimit = c(UL1, UL2, UL3),
-  Significant = c("Yes", "Yes", "No")
-)
-
-# Create a table using kable
-table <- kable(df2)
-table
-```
-
-According to the table reporting the lower and upper bounds of confidence intervals for each comparison groups, two comparisons were found to have significant different means (confidence interval does not contain zero). Only ConditionMorning and ConditionEvening have insignificant difference in mean (confidence interval contains zero). This result aligns with the previous result from the Fisher's LSD test.
-
-## Effect Size (D)
-After two comparison groups have been tested to have significant difference in means, the effect size (D) is measured to examine how large the condition effects are. A table of effect size is reported below:
-
-```{r, echo=FALSE}
-# calculate the effect size scores
-D1 = mean1/sqrt(MSE)
-D2 = mean2/sqrt(MSE)
-
-# create a data frame to store effect size scores
-df3 <- data.frame(
-  Comparison = c("ConditionMorning and ConditionAfternoon", 
-                 "ConditionAfternoon and ConditionEvening"),
-  D = c(D1, D2)
-)
-
-# Create a table using kable
-table <- kable(df3)
-table
-```
-
-According to the table, both comparison groups exhibit substantial effect sizes (D > 1). Specifically, the disparity in willingness between students attending morning and afternoon classes is 1.23 times the magnitude of typical within-group deviations in willingness. Similarly, the variance in willingness between students attending afternoon and evening classes is 1.10 times the magnitude of typical within-group deviations in willingness.
 
 ## R-squared
 ```{r, echo=FALSE}
