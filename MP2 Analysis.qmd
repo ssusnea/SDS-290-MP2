@@ -1,6 +1,6 @@
 ---
 title: "MP2"
-author: "Cindy Sun, Nora Zhou, Sarah Susnea"
+author: "Cindy Sun, Sarah Susnea, Nora Zhou"
 format: pdf
 ---
 
@@ -29,7 +29,7 @@ What drives college students to choose specific classes? This research aims to e
 
 # Method 
 
-The study collected data specifically for the SDS290 class during the Spring of 2024, with a total of 38 college students participating. One incomplete response was removed during the data cleaning process, resulting in a dataset of 38 observations. The experiemntal unit of this study is participants. Each participant was presented with a scenario regarding course registration and then asked to rate their interest in enrolling in the class on a scale of 1 to 5, which is the response variable of this study. The scenario provided was as follows:
+The study collected data specifically for the SDS290 class during the Spring of 2024, with a total of 38 college students participating. One incomplete response was removed during the data cleaning process, resulting in a dataset of 38 observations. The experimental unit of this study is participant. Each participant was presented with a scenario regarding course registration and then asked to rate their interest in enrolling in the class on a scale of 1 to 5, which is the response variable of this study. The scenario provided was as follows:
 
 
 *You've come across a fascinating course that you'd like to take next semester, but unfortunately, Smith does not offer this particular class. Luckily, you discovered that Amherst College provides this course, scheduled every Monday and Wednesday from* ___ *to* ___*. On a scale of 1 to 5, how inclined are you to enroll in this course? (1 = not interested at all, 5 = Yes! I will definitely take it)*
@@ -70,10 +70,6 @@ colnames(data_clean) <- names
 write_csv(data_clean, file = "clean_data.csv")
 ```
 
-
-
-
-
 ## Conditions Check
 ```{r, echo=FALSE}
 # fit the model
@@ -84,7 +80,7 @@ mod <- lm(score ~ condition*car, data = data_clean)
 Assumed each participant is affected exactly the same in each condition group.
 
 - A. Additive effects:
-Assumed effects of condition, car and interaction of condition and car are addictive.
+Assumed effects of condition, car and interaction of condition and car are additive.
 
 - S. Same standard deviations:
 ```{r, echo=FALSE}
@@ -108,7 +104,7 @@ data_clean |>
 plot(mod, which = 1)
 ```
 
-The largest SD is slightly more than two times (2.12) as big as the smallest for the interaction condition, but is satisfied for condition and score conditions separately, and the graph also does not show a pattern of residuals, so it is reasonable.
+The largest SD is slightly more than two times (2.12) as big as the smallest for the interaction condition, but is satisfied for condition and car separately, and the graph also does not show a pattern of residuals. Given that this is a really small sample, we expect the condition to be met.
 
 - I. Independent residuals:
 Assumed the residuals are independent due to independent participants. 
@@ -125,24 +121,18 @@ qplot(mod$residuals, bins = 5)
 ```
 According to the histogram, the distribution is normal with the mean of the residuals centered at zero. This condition is satisfied.
 
-## ANOVA table and plots
-After checking all the conditions, the model has been fitted and an ANOVA test has been used. The ANOVA table is provided below:
-```{r, echo=FALSE}
-anova(mod)
-```
+## Plots and ANOVA table
 
-A boxplot showing the variance of means of the three condition and two car groups is shown below:
+A boxplot showing the variances and mediums of the three condition and two car groups is shown below:
 ```{r, echo=FALSE,fig.height=3, fig.width=5}
 ggplot(data = data_clean, 
        aes(x =condition, y = score, fill = car)) + 
        geom_boxplot()
 ```
 
-According to both the ANOVA result and the boxplot, there is no statistically significant effect of condition on college students' willingness to enroll in a class, F(2, 32) = 0.1630, p = 0.8503. Neither does car, F(1, 32) = 2.1518, p = 0.1522, and the interaction between condition and car, F(2, 32) = 0.0443, p = 0.9567. 
+An plot showing the main effects of condition and car ownership and the interaction between them on registration preferences are shown below:
 
-The hypothesis of college students exhibit preferences or aversions towards certain class schedule times is favored. Significantly, the boxplot demonstrates a greater average willingness score for class offerings in the afternoon compared to both evening and morning sessions.
-
-```{r,echo = F}
+```{r,echo = F,fig.height=3, fig.width=5}
 ggplot(data_clean, aes(x = condition, y = score, 
                     group = car, 
                     color = car)) +
@@ -150,11 +140,22 @@ ggplot(data_clean, aes(x = condition, y = score,
   geom_smooth(method = "lm", se = 0)
 ```
 
+After checking all the conditions, the model has been fitted and an ANOVA test has been used. The ANOVA table is provided below:
+```{r, echo=FALSE}
+anova(mod)
+```
+
+Surprisingly, based on the boxplot, people who have cars on campus are less likely to register for the class than their counterparts. However, according to the ANOVA table, there is no statistically significant main effect of car ownership on class registration preferences F(1, 32) = 2.1518, p = 0.1522.
+
+In addition, there is no statistically significant main effect of condition on college students' willingness to enroll in a class, F(2, 32) = 0.1630, p = 0.8503. Neither does interaction between condition and car, F(2, 32) = 0.0443, p = 0.9567. Therefore, we reject all of our hypotheses.
+
+
 ## R-squared
 ```{r, echo=FALSE}
-R2 = 14.323/(14.323+44.420)
+R2 <- (0.428 + 2.824 + 0.116)/(0.428 + 2.824 + 0.116 + 42.000)
 ```
-Given the sum of squares due to regression (SSR) and the sum of squares total (SST) scores from the ANOVA table, the R-squared value is computed to be 0.2438248. This means that about 24% of the variation in college students' willingness of taking the course is explained by when the class is offered.
+Given the sum of squares due to regression (SSR) and the sum of squares total (SST) scores from the ANOVA table, the R-squared value is computed to be 0.074. This means that only 7.4% of the variation in college students' willingness of taking the course is explained by the model. 
+
 
 # Conclusion
 This research aims to investigate the correlation between the timing of class offerings and college students' inclination to enroll in the class. The hypothesis is that students will display preferences or aversions towards specific class schedule times, particularly favoring morning or afternoon classes over evening ones. The ANOVA test results reveal a statistically significant impact of class timing on students' inclination to register, which favors the hypothesis. Furthermore, the evaluation of Fisher's LSD scores and confidence intervals indicate significant mean differences between two out of three comparison groups (ConditionMorning and ConditionAfternoon; ConditionAfternoon and ConditionEvening). This suggests a preference among college students for courses offered in the afternoon over those offered in the morning or evening, with both groups exhibiting large effect sizes. The R-squared value of 0.2438248 signifies that approximately 24% of the variation in students' willingness to enroll in the course can be attributed to the timing of class offerings, indicating a moderate explanatory power.
