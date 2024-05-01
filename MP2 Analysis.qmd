@@ -154,7 +154,7 @@ In addition, there is no statistically significant main effect of condition on c
 ```{r, echo=FALSE}
 R2 <- (0.428 + 2.824 + 0.116)/(0.428 + 2.824 + 0.116 + 42.000)
 ```
-Given the sum of squares due to regression (SSR) and the sum of squares total (SST) scores from the ANOVA table, the R-squared value is computed to be 0.074. This means that only 7.4% of the variation in college students' willingness of taking the course is explained by the model. 
+Given the sum of squares from the ANOVA table, the R-squared value is computed to be 0.074. This means that only 7.4% of the variation in college students' willingness of taking the course is explained by the model.
 
 
 # Conclusion
