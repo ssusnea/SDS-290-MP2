@@ -119,7 +119,6 @@ plot(mod, which = 2)
 ```
 Residual distribution is roughly normal, except for those deviate at both ends. However, since real-world data wouldn't be perfect and there are only 38 complete responses in this study, the condition is assumed satisfied. 
 
-
 - Z. Zero mean residuals:
 ```{r, echo=FALSE, fig.height=3, fig.width=5}
 qplot(mod$residuals, bins = 5)
@@ -132,14 +131,16 @@ After checking all the conditions, the model has been fitted and an ANOVA test h
 anova(mod)
 ```
 
-A boxplot showing the variance of means of the three condition groups is shown below:
+A boxplot showing the variance of means of the three condition and two car groups is shown below:
 ```{r, echo=FALSE,fig.height=3, fig.width=5}
 ggplot(data = data_clean, 
        aes(x =condition, y = score, fill = car)) + 
        geom_boxplot()
 ```
 
-According to both the ANOVA result and the boxplot, there is a statistically significant effect of course schedules on college students' willingness to enroll in a class (p=0.01, which is smaller than 0.05). The hypothesis of college students exhibit preferences or aversions towards certain class schedule times is favored. Significantly, the boxplot demonstrates a greater average willingness score for class offerings in the afternoon compared to both evening and morning sessions.
+According to both the ANOVA result and the boxplot, there is no statistically significant effect of condition on college students' willingness to enroll in a class, F(2, 32) = 0.1630, p = 0.8503. Neither does car, F(1, 32) = 2.1518, p = 0.1522, and the interaction between condition and car, F(2, 32) = 0.0443, p = 0.9567. 
+
+The hypothesis of college students exhibit preferences or aversions towards certain class schedule times is favored. Significantly, the boxplot demonstrates a greater average willingness score for class offerings in the afternoon compared to both evening and morning sessions.
 
 ```{r,echo = F}
 ggplot(data_clean, aes(x = condition, y = score, 
@@ -154,8 +155,6 @@ ggplot(data_clean, aes(x = condition, y = score,
 R2 = 14.323/(14.323+44.420)
 ```
 Given the sum of squares due to regression (SSR) and the sum of squares total (SST) scores from the ANOVA table, the R-squared value is computed to be 0.2438248. This means that about 24% of the variation in college students' willingness of taking the course is explained by when the class is offered.
-
-
 
 # Conclusion
 This research aims to investigate the correlation between the timing of class offerings and college students' inclination to enroll in the class. The hypothesis is that students will display preferences or aversions towards specific class schedule times, particularly favoring morning or afternoon classes over evening ones. The ANOVA test results reveal a statistically significant impact of class timing on students' inclination to register, which favors the hypothesis. Furthermore, the evaluation of Fisher's LSD scores and confidence intervals indicate significant mean differences between two out of three comparison groups (ConditionMorning and ConditionAfternoon; ConditionAfternoon and ConditionEvening). This suggests a preference among college students for courses offered in the afternoon over those offered in the morning or evening, with both groups exhibiting large effect sizes. The R-squared value of 0.2438248 signifies that approximately 24% of the variation in students' willingness to enroll in the course can be attributed to the timing of class offerings, indicating a moderate explanatory power.
