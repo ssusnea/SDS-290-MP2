@@ -83,28 +83,57 @@ Assumed each participant is affected exactly the same in each condition group.
 Assumed effects of condition, car and interaction of condition and car are additive.
 
 - S. Same standard deviations:
+
+
+The max sd divided by the min sd, grouped by class schedules, is calculated below:
 ```{r, echo=FALSE}
 # descriptive data
 data_clean |>
     group_by(condition) |>
     summarize(sd = sd(score)) |>
     summarize(max(sd)/min(sd))
+```
+According to the result above, the condition is met for the main effect of class schedules on registration preferences.
 
+
+The max sd divided by the min sd, grouped by car ownership, is calculated below:
+```{r, echo=FALSE}
 data_clean |>
     group_by(car) |>
     summarize(sd = sd(score)) |>
     summarize(max(sd)/min(sd))
+```
+According to the result above, the condition is met for the main effect of car ownership on registration preferences.
 
+
+The max sd divided by the min sd, grouped by class schedules & car ownership, is calculated below:
+```{r, echo=FALSE}
 data_clean |>
     group_by(condition, car) |>
     summarize(sd = sd(score)) |>
     ungroup() |>
     summarize(max(sd)/min(sd))
+```
 
+According to the result above, the condition is violated for the interaction effect of class schedules & car ownership on registration preferences. The largest SD is slightly more than two times (2.12) as big as the smallest for the interaction condition. 
+
+
+We applied the log transformation on our outcome variable, and reevaluated the same standard deviation condition, the max sd divided by the min sd of the interaction effect is given below:
+```{r, echo=FALSE}
+data_clean |>
+    group_by(condition, car) |>
+    summarize(sd = sd(log(score))) |>
+    ungroup() |>
+    summarize(max(sd)/min(sd))
+```
+We see that after log transformation, the difference between standard deviations are even larger (2.81>2.12). Therefore, we chose to not transform our outcome variable in model fitting. 
+
+
+Based on the calculation, our condition of same standard deviation is slightly violated. However, when we plot the residual plot (see below), we see that the red line falls along y = 0. Therefore, we still assume that this condition is met. 
+```{r, echo=FALSE}
 plot(mod, which = 1)
 ```
 
-The largest SD is slightly more than two times (2.12) as big as the smallest for the interaction condition, but is satisfied for condition and car separately, and the graph also does not show a pattern of residuals. Given that this is a really small sample, we expect the condition to be met.
 
 - I. Independent residuals:
 Assumed the residuals are independent due to independent participants. 
@@ -136,7 +165,7 @@ An plot showing the main effects of condition and car ownership and the interact
 ggplot(data_clean, aes(x = condition, y = score, 
                     group = car, 
                     color = car)) +
-  geom_point() +
+  geom_point(alpha = 0.2) +
   geom_smooth(method = "lm", se = 0)
 ```
 
