@@ -127,7 +127,6 @@ plot(mod, which = 2)
 ```
 Residual distribution is roughly normal, except for those deviate at both ends. However, since real-world data wouldn't be perfect and there are only 38 complete responses in this study, the condition is assumed satisfied. 
 
-
 - Z. Zero mean residuals:
 ```{r, echo=FALSE, fig.height=3, fig.width=5}
 qplot(mod$residuals, bins = 5)
@@ -140,14 +139,16 @@ After checking all the conditions, the model has been fitted and an ANOVA test h
 anova(mod)
 ```
 
-A boxplot showing the variance of means of the three condition groups is shown below:
+A boxplot showing the variance of means of the three condition and two car groups is shown below:
 ```{r, echo=FALSE,fig.height=3, fig.width=5}
 ggplot(data = data_clean, 
        aes(x =condition, y = score, fill = car)) + 
        geom_boxplot()
 ```
 
-According to both the ANOVA result and the boxplot, there is a statistically significant effect of course schedules on college students' willingness to enroll in a class (p=0.01, which is smaller than 0.05). The hypothesis of college students exhibit preferences or aversions towards certain class schedule times is favored. Significantly, the boxplot demonstrates a greater average willingness score for class offerings in the afternoon compared to both evening and morning sessions.
+According to both the ANOVA result and the boxplot, there is no statistically significant effect of condition on college students' willingness to enroll in a class, F(2, 32) = 0.1630, p = 0.8503. Neither does car, F(1, 32) = 2.1518, p = 0.1522, and the interaction between condition and car, F(2, 32) = 0.0443, p = 0.9567. 
+
+The hypothesis of college students exhibit preferences or aversions towards certain class schedule times is favored. Significantly, the boxplot demonstrates a greater average willingness score for class offerings in the afternoon compared to both evening and morning sessions.
 
 ## Fisher's LSD 
 ```{r, echo=FALSE}
