@@ -116,7 +116,7 @@ data_clean |>
 plot(mod, which = 1)
 ```
 
-The condition is met because the largest standard deviation is not yet 2 times of the smallest standard deviation (1.21/1.13 = 1.070796).
+The largest SD is slightly more than two times (2.12) as big as the smallest for the interaction condition, but is satisfied for condition and score conditions separately, and the graph also does not show a pattern of residuals, so it is reasonable.
 
 - I. Independent residuals:
 Assumed the residuals are independent due to independent participants. 
@@ -126,6 +126,7 @@ Assumed the residuals are independent due to independent participants.
 plot(mod, which = 2)
 ```
 Residual distribution is roughly normal, except for those deviate at both ends. However, since real-world data wouldn't be perfect and there are only 38 complete responses in this study, the condition is assumed satisfied. 
+
 
 - Z. Zero mean residuals:
 ```{r, echo=FALSE, fig.height=3, fig.width=5}
