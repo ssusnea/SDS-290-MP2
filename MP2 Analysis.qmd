@@ -125,7 +125,7 @@ Assumed the residuals are independent due to independent participants.
 ```{r, echo=FALSE, fig.height=3, fig.width=5}
 plot(mod, which = 2)
 ```
-Residual distribution is roughly normal, except for those deviate at both ends. However, since real-world data wouldn't be perfect and there are only 39 complete responses in this study, the condition is assumed satisfied. 
+Residual distribution is roughly normal, except for those deviate at both ends. However, since real-world data wouldn't be perfect and there are only 38 complete responses in this study, the condition is assumed satisfied. 
 
 - Z. Zero mean residuals:
 ```{r, echo=FALSE, fig.height=3, fig.width=5}
