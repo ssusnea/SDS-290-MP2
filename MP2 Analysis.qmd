@@ -1,6 +1,6 @@
 ---
 title: "MP2"
-author: "C"
+author: "Cindy Sun, Nora Zhou, Sarah Susnea"
 format: pdf
 ---
 
@@ -76,13 +76,16 @@ ggplot(data_clean, aes(x = condition, y = score,
   geom_smooth(method = "lm", se = 0)
 ```
 
+```{r}
+
+```
 
 
 
 ## Conditions Check
 ```{r, echo=FALSE}
 # fit the model
-model <- lm(score~condition, data = data_clean)
+mod <- lm(score ~ condition*car, data = data_clean)
 ```
 
 - C. Constant effects: 
@@ -95,39 +98,52 @@ Assumed the effect of each condition is added to individual observation, rather 
 ```{r, echo=FALSE}
 # descriptive data
 data_clean |>
-  group_by(condition) |>
-  summarize(n = n(),
-            mean = mean(score),
-            sd = sd(score)
-  )
+    group_by(condition) |>
+    summarize(sd = sd(score)) |>
+    summarize(max(sd)/min(sd))
+
+data_clean |>
+    group_by(car) |>
+    summarize(sd = sd(score)) |>
+    summarize(max(sd)/min(sd))
+
+data_clean |>
+    group_by(condition, car) |>
+    summarize(sd = sd(score)) |>
+    ungroup() |>
+    summarize(max(sd)/min(sd))
+
+plot(mod, which = 1)
 ```
 
 The condition is met because the largest standard deviation is not yet 2 times of the smallest standard deviation (1.21/1.13 = 1.070796).
 
 - I. Independent residuals:
-Assumed the residuals are independent due to independent observations resulted from random sampling. 
+Assumed the residuals are independent due to independent participants. 
 
 - N. Normally distributed residuals:
 ```{r, echo=FALSE, fig.height=3, fig.width=5}
-plot(model, which = 2)
+plot(mod, which = 2)
 ```
-Residual distribution is roughly normal, except for those deviate at both ends. However, since real-world data wouldn't be perfect and there are only 35 complete responses in this study, the condition is assumed satisfied. 
+Residual distribution is roughly normal, except for those deviate at both ends. However, since real-world data wouldn't be perfect and there are only 39 complete responses in this study, the condition is assumed satisfied. 
 
 - Z. Zero mean residuals:
 ```{r, echo=FALSE, fig.height=3, fig.width=5}
-qplot(model$residuals, bins = 4)
+qplot(mod$residuals, bins = 5)
 ```
 According to the histogram, the distribution of the residuals is slightly right skewed, making the mean of the residuals unequal to zero. This condition is violated. However, if more responses where collected, there could be a chance that the residual mean is zero.
 
 ## ANOVA table and boxplot
 After checking all the conditions, the model has been fitted and an ANOVA test has been used. The ANOVA table is provided below:
 ```{r, echo=FALSE}
-anova(model)
+anova(mod)
 ```
 
 A boxplot showing the variance of means of the three condition groups is shown below:
 ```{r, echo=FALSE,fig.height=3, fig.width=5}
-ggplot(data = data_clean, aes(x =condition, y = score)) + geom_boxplot()
+ggplot(data = data_clean, 
+       aes(x =condition, y = score, fill = car)) + 
+       geom_boxplot()
 ```
 
 According to both the ANOVA result and the boxplot, there is a statistically significant effect of course schedules on college students' willingness to enroll in a class (p=0.01, which is smaller than 0.05). The hypothesis of college students exhibit preferences or aversions towards certain class schedule times is favored. Significantly, the boxplot demonstrates a greater average willingness score for class offerings in the afternoon compared to both evening and morning sessions.
