@@ -161,13 +161,23 @@ ggplot(data = data_clean,
 
 An plot showing the main effects of condition and car ownership and the interaction between them on registration preferences are shown below:
 
-```{r,echo = F,fig.height=3, fig.width=5}
-ggplot(data_clean, aes(x = condition, y = score, 
-                    group = car, 
-                    color = car)) +
-  geom_point(alpha = 0.2) +
-  geom_smooth(method = "lm", se = 0)
+```{r, echo=F}
+# Calculate means for each combination of condition and car
+means_data <- data_clean %>%
+  group_by(condition, car) %>%
+  summarize(mean_score = mean(score))
 ```
+
+
+```{r, echo=F,fig.height=3, fig.width=5}
+# Create the plot
+ggplot(means_data, aes(x = condition, y = mean_score, group = car, color = car)) +
+  geom_point() + # Plot the points
+  geom_line(aes(x = condition, y = mean_score, color = car)) + # Draw line segments
+  labs(x = "Condition", y = "Mean Score") + # Add axis labels
+  theme_minimal() # Apply a minimal theme
+```
+
 
 After checking all the conditions, the model has been fitted and an ANOVA test has been used. The ANOVA table is provided below:
 ```{r, echo=FALSE}
