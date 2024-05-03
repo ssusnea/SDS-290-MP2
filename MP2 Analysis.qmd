@@ -1,5 +1,5 @@
 ---
-title: "MP2"
+title: "MP2: What Affects Class Registration?"
 author: "Cindy Sun, Sarah Susnea, Nora Zhou"
 format: pdf
 ---
@@ -184,7 +184,7 @@ After checking all the conditions, the model has been fitted and an ANOVA test h
 anova(mod)
 ```
 
-Surprisingly, based on the boxplot, people who have cars on campus are less likely to register for the class than their counterparts. However, according to the ANOVA table, there is no statistically significant main effect of car ownership on class registration preferences F(1, 32) = 2.1518, p = 0.1522.
+Surprisingly, based on the boxplot and the interaction plot, people who have cars on campus are less likely to register for the class than their counterparts. However, according to the ANOVA table, there is no statistically significant main effect of car ownership status on class registration preferences F(1, 32) = 2.1518, p = 0.1522.
 
 In addition, there is no statistically significant main effect of condition on college students' willingness to enroll in a class, F(2, 32) = 0.1630, p = 0.8503. Neither does interaction between condition and car, F(2, 32) = 0.0443, p = 0.9567. Therefore, we reject all of our hypotheses.
 
